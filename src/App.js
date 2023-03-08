@@ -1,6 +1,9 @@
-import './App.css';
-import { BrowserRouter, Route } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import DogList from "./DogList";
+import DogDetails from "./DogDetails";
+import NavBar from "./NavBar";
+import "./App.css";
 import whiskey from './images/whiskey.jpg';
 import duke from './images/duke.jpg';
 import perry from './images/perry.jpg';
@@ -10,9 +13,15 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Route exact path="/dogs">
-        <DogList dogs={App.defaultProps.dogs} />
-      </Route>
+      <NavBar dogs={App.defaultProps.dogs} />
+        <Switch>
+          <Route exact path={['/', '/dogs']}>
+            <DogList dogs={App.defaultProps.dogs} />
+          </Route>
+          <Route exact path="/dogs/:name">
+          <DogDetails key={window.location.pathname} dogs={App.defaultProps.dogs} />
+          </Route>
+        </Switch>
       </BrowserRouter>
     </div>
   );
@@ -64,3 +73,4 @@ App.defaultProps = {
 };
 
 export default App;
+
